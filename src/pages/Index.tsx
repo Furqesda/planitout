@@ -4,8 +4,16 @@ import { Calendar, MapPin, Users, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import heroBg from "@/assets/hero-bg.jpg";
+import cityMap from "@/assets/city-map.jpg";
+import { useScrollAnimation, useHeroScroll } from "@/hooks/useScrollAnimation";
 
 const Index = () => {
+  const { heroScale, heroOpacity } = useHeroScroll();
+  const section2 = useScrollAnimation();
+  const section3 = useScrollAnimation();
+  const section4 = useScrollAnimation();
+  const section5 = useScrollAnimation();
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -21,7 +29,13 @@ const Index = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-black/40 to-black/60" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-6 text-center text-white space-y-8 animate-fade-in">
+        <div 
+          className="relative z-10 container mx-auto px-6 text-center text-white space-y-8 animate-fade-in transition-all duration-700 ease-in-out"
+          style={{
+            transform: `scale(${heroScale})`,
+            opacity: heroOpacity,
+          }}
+        >
           <h1 className="text-6xl md:text-7xl font-bold tracking-wide leading-tight">
             Discover what's next,
             <br />
@@ -59,16 +73,21 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 bg-gradient-to-b from-background to-muted/30">
+      <section 
+        ref={section2.ref as React.RefObject<HTMLElement>}
+        className={`py-24 bg-gradient-to-b from-background to-muted/30 transition-all duration-700 ${
+          section2.isVisible ? 'animate-slide-in-left' : 'opacity-0'
+        }`}
+      >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 animate-fade-in-up sticky top-24">
+            <div className="space-y-6 sticky top-24">
               <h2 className="text-5xl font-bold tracking-wide">
                 How PlanItout works for you
               </h2>
             </div>
 
-            <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+            <div className="space-y-8">
               <p className="text-xl text-muted-foreground leading-relaxed">
                 All you've gotta do is explore events and find the one that matches your vibe — maybe it's a reason to spend a lovely evening with your girlfriend, or a day out with the family (they'll love it even more if you're the one paying 😉).
               </p>
@@ -81,10 +100,15 @@ const Index = () => {
       </section>
 
       {/* Flow Section */}
-      <section className="py-24 relative overflow-hidden">
+      <section 
+        ref={section3.ref as React.RefObject<HTMLElement>}
+        className={`py-24 relative overflow-hidden transition-all duration-700 ${
+          section3.isVisible ? 'animate-slide-in-right' : 'opacity-0'
+        }`}
+      >
         <div className="absolute inset-0 gradient-hero opacity-10" />
         <div className="container mx-auto px-6 relative z-10">
-          <h2 className="text-5xl font-bold tracking-wide text-center mb-16 animate-fade-in">
+          <h2 className="text-5xl font-bold tracking-wide text-center mb-16">
             The PlanItout Flow
           </h2>
 
@@ -111,8 +135,7 @@ const Index = () => {
             ].map((item, index) => (
               <div
                 key={index}
-                className="glass rounded-2xl p-8 text-center space-y-4 hover:-translate-y-2 transition-all duration-500 animate-fade-in-up"
-                style={{ animationDelay: item.delay }}
+                className="glass rounded-2xl p-8 text-center space-y-4 hover:-translate-y-2 transition-all duration-500"
               >
                 <div className="inline-block p-4 rounded-full bg-gradient-to-br from-primary/20 to-accent/20">
                   <item.icon className="w-12 h-12 text-primary" />
@@ -128,18 +151,24 @@ const Index = () => {
       </section>
 
       {/* Map Section */}
-      <section className="py-24 bg-muted/30">
+      <section 
+        ref={section4.ref as React.RefObject<HTMLElement>}
+        className={`py-24 bg-muted/30 transition-all duration-700 ${
+          section4.isVisible ? 'animate-slide-in-bottom' : 'opacity-0'
+        }`}
+      >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="glass rounded-2xl h-96 flex items-center justify-center animate-fade-in">
-              <div className="text-center space-y-4">
-                <MapPin className="w-16 h-16 text-primary mx-auto" />
-                <p className="text-2xl font-semibold">Local Magic</p>
-                <p className="text-muted-foreground">Interactive map coming soon</p>
-              </div>
+            <div className="relative rounded-2xl h-96 overflow-hidden shadow-2xl">
+              <img 
+                src={cityMap} 
+                alt="Interactive city map with event locations" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
             </div>
 
-            <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+            <div className="space-y-6">
               <h2 className="text-5xl font-bold tracking-wide">
                 Explore what's happening around you
               </h2>
@@ -155,9 +184,14 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
+      <section 
+        ref={section5.ref as React.RefObject<HTMLElement>}
+        className={`py-24 relative overflow-hidden transition-all duration-700 ${
+          section5.isVisible ? 'animate-fade-in-up' : 'opacity-0'
+        }`}
+      >
         <div className="absolute inset-0 gradient-hero" />
-        <div className="container mx-auto px-6 relative z-10 text-center text-white space-y-8 animate-fade-in">
+        <div className="container mx-auto px-6 relative z-10 text-center text-white space-y-8">
           <h2 className="text-5xl md:text-6xl font-bold tracking-wide">
             Ready to find your next event?
           </h2>
