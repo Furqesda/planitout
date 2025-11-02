@@ -8,19 +8,16 @@ import { Card } from "@/components/ui/card";
 import { login, isLoggedIn } from "@/lib/authHelpers";
 import { toast } from "sonner";
 import authBg from "@/assets/hero-bg.jpg";
-
 const Auth = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-
   useEffect(() => {
     if (isLoggedIn()) {
       navigate("/dashboard");
     }
   }, [navigate]);
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -31,7 +28,6 @@ const Auth = () => {
     toast.success("Welcome back! 🎉");
     navigate("/dashboard");
   };
-
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password || !name) {
@@ -42,16 +38,10 @@ const Auth = () => {
     toast.success("Account created successfully! 🎉");
     navigate("/dashboard");
   };
-
-  return (
-    <div className="min-h-screen flex">
+  return <div className="min-h-screen flex">
       {/* Left Side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <img
-          src={authBg}
-          alt="Events"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src={authBg} alt="Events" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-accent/60 to-primary/80" />
         <div className="absolute inset-0 flex items-center justify-center p-12 text-center text-white">
           <div className="space-y-6 animate-fade-in">
@@ -90,30 +80,15 @@ const Auth = () => {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="login-email">Email</Label>
-                  <Input
-                    id="login-email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <Input id="login-email" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="login-password">Password</Label>
-                  <Input
-                    id="login-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <Input id="login-password" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} />
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full transition-all duration-300 hover:scale-105"
-                >
+                <Button type="submit" className="w-full transition-all duration-300 hover:scale-105">
                   Login
                 </Button>
               </form>
@@ -123,54 +98,29 @@ const Auth = () => {
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="signup-name">Name</Label>
-                  <Input
-                    id="signup-name"
-                    type="text"
-                    placeholder="Your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
+                  <Input id="signup-name" type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)} />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="signup-email">Email</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="you@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
+                  <Input id="signup-email" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="signup-password">Password</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <Input id="signup-password" type="password" placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} />
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full transition-all duration-300 hover:scale-105"
-                >
+                <Button type="submit" className="w-full transition-all duration-300 hover:scale-105">
                   Create Account
                 </Button>
               </form>
             </TabsContent>
           </Tabs>
 
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            Quick login — any email and password works.
-          </p>
+          
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Auth;
