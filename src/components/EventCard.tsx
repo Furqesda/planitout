@@ -1,4 +1,4 @@
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, MapPin, Users, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Event, getRandomDistance } from "@/lib/sampleEvents";
 import { format } from "date-fns";
@@ -7,10 +7,12 @@ interface EventCardProps {
   event: Event;
   onViewDetails: () => void;
   onAttend: () => void;
+  onDelete?: () => void;
   isAttended?: boolean;
+  isOwnEvent?: boolean;
 }
 
-const EventCard = ({ event, onViewDetails, onAttend, isAttended }: EventCardProps) => {
+const EventCard = ({ event, onViewDetails, onAttend, onDelete, isAttended, isOwnEvent }: EventCardProps) => {
   const distance = event.distance || getRandomDistance();
 
   return (
@@ -60,14 +62,26 @@ const EventCard = ({ event, onViewDetails, onAttend, isAttended }: EventCardProp
           >
             View Details
           </Button>
-          <Button
-            onClick={onAttend}
-            disabled={isAttended}
-            className="flex-1 text-xs sm:text-sm transition-all duration-300 hover:scale-105"
-            size="sm"
-          >
-            {isAttended ? "Attending ✓" : "Attend"}
-          </Button>
+          {isOwnEvent && onDelete ? (
+            <Button
+              onClick={onDelete}
+              variant="outline"
+              className="flex-1 text-xs sm:text-sm transition-all duration-300 hover:scale-105 hover:bg-gradient-to-r hover:from-red-400/20 hover:to-rose-500/20 hover:border-red-400/50"
+              size="sm"
+            >
+              <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+              Delete
+            </Button>
+          ) : (
+            <Button
+              onClick={onAttend}
+              disabled={isAttended}
+              className="flex-1 text-xs sm:text-sm transition-all duration-300 hover:scale-105"
+              size="sm"
+            >
+              {isAttended ? "Attending ✓" : "Attend"}
+            </Button>
+          )}
         </div>
       </div>
     </div>

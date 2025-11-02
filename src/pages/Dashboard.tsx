@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventCard from "@/components/EventCard";
 import EventModal from "@/components/EventModal";
+import DeleteEventDialog from "@/components/DeleteEventDialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
@@ -18,6 +19,8 @@ const Dashboard = () => {
   const [createdEvents, setCreatedEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
 
   useEffect(() => {
     if (!isLoggedIn()) {
@@ -63,23 +66,36 @@ const Dashboard = () => {
     loadEvents();
   };
 
-  const handleDeleteEvent = async (eventId: string) => {
-    if (!eventId.startsWith("sample-")) {
-      try {
-        const { error } = await supabase
-          .from("events")
-          .delete()
-          .eq("id", eventId);
+  const handleDeleteClick = (event: Event) => {
+    setEventToDelete(event);
+    setDeleteDialogOpen(true);
+  };
 
-        if (error) throw error;
-        toast.success("Event deleted successfully");
-        loadEvents();
-      } catch (error) {
-        console.error("Error deleting event:", error);
-        toast.error("Failed to delete event");
-      }
-    } else {
+  const handleDeleteConfirm = async () => {
+    if (!eventToDelete) return;
+
+    if (eventToDelete.id.startsWith("sample-")) {
       toast.error("Cannot delete sample events");
+      setDeleteDialogOpen(false);
+      setEventToDelete(null);
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("events")
+        .delete()
+        .eq("id", eventToDelete.id);
+
+      if (error) throw error;
+
+      setDeleteDialogOpen(false);
+      setEventToDelete(null);
+      toast.success("🗑️ Event deleted successfully");
+      loadEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      toast.error("Failed to delete event");
     }
   };
 
@@ -154,8 +170,9 @@ const Dashboard = () => {
                           setSelectedEvent(event);
                           setIsModalOpen(true);
                         }}
-                        onAttend={() => handleDeleteEvent(event.id)}
-                        isAttended={false}
+                        onAttend={() => {}}
+                        onDelete={() => handleDeleteClick(event)}
+                        isOwnEvent={true}
                       />
                     </div>
                   ))}
@@ -185,6 +202,12 @@ const Dashboard = () => {
         onClose={() => setIsModalOpen(false)}
         onAttend={() => {}}
         isAttended={true}
+      />
+
+      <DeleteEventDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
       />
 
       <Footer />
