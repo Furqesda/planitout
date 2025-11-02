@@ -10,12 +10,6 @@ Discover & Host Local Events – Cinematic, Modern, Full-Stack Web App
 
 PlanItout is a cinematic, modern web application that helps people discover local events, create their own experiences, and connect with others who share their vibe. The app features a premium interface with smooth animations, glassmorphism, and a cohesive, launch-ready aesthetic.
 
-It was built as part of a full-stack mini project challenge for a tech internship application.
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/dafa7ced-38ce-4733-8856-a1c4db2f48ef) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
 
 ### Key Features
 
