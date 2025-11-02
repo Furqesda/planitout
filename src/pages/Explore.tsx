@@ -128,40 +128,40 @@ const Explore = () => {
         />
       )}
 
-      <main className="pt-24 pb-12">
-        <div className="container mx-auto px-6">
+      <main className="pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="container mx-auto px-4 sm:px-6">
           {/* Hero Section */}
-          <div className="text-center mb-12 space-y-4 animate-fade-in">
-            <h1 className="text-5xl font-bold tracking-wide">
+          <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4 animate-fade-in">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide">
               Discover Your Next
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 {" "}Experience
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               From concerts to coffee chats, find events that match your vibe
             </p>
           </div>
 
           {/* Search & Filters */}
-          <div className="glass rounded-2xl p-6 mb-12 space-y-4 animate-fade-in-up">
-            <div className="flex flex-col md:flex-row gap-4">
+          <div className="glass rounded-2xl p-4 sm:p-6 mb-8 sm:mb-12 space-y-3 sm:space-y-4 animate-fade-in-up">
+            <div className="flex flex-col md:flex-row gap-3 sm:gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
                 <Input
                   placeholder="Search events..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-9 sm:pl-10 text-sm sm:text-base"
                 />
               </div>
               <div className="relative flex-1">
-                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground" />
                 <Input
                   placeholder="Filter by location..."
                   value={locationFilter}
                   onChange={(e) => setLocationFilter(e.target.value)}
-                  className="pl-10"
+                  className="pl-9 sm:pl-10 text-sm sm:text-base"
                 />
               </div>
               <Button
@@ -170,6 +170,7 @@ const Explore = () => {
                   setLocationFilter("");
                 }}
                 variant="outline"
+                className="w-full md:w-auto"
               >
                 Clear
               </Button>
@@ -177,7 +178,7 @@ const Explore = () => {
           </div>
 
           {/* Events Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredEvents.map((event, index) => (
               <div
                 key={event.id}
@@ -194,8 +195,8 @@ const Explore = () => {
           </div>
 
           {filteredEvents.length === 0 && (
-            <div className="text-center py-20 animate-fade-in">
-              <p className="text-2xl text-muted-foreground">
+            <div className="text-center py-12 sm:py-20 animate-fade-in px-4">
+              <p className="text-xl sm:text-2xl text-muted-foreground">
                 No events found. Try adjusting your filters.
               </p>
             </div>

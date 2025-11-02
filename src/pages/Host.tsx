@@ -100,21 +100,21 @@ const Host = () => {
         />
       )}
 
-      <main className="pt-24 pb-12">
-        <div className="container mx-auto px-6 max-w-3xl">
-          <div className="text-center mb-12 space-y-4 animate-fade-in">
-            <h1 className="text-5xl font-bold tracking-wide">
+      <main className="pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+          <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4 animate-fade-in">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide">
               Host Your
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 {" "}Event
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground px-4">
               Create unforgettable experiences for your community
             </p>
           </div>
 
-          <Card className="glass p-8 animate-fade-in-up">
+          <Card className="glass p-4 sm:p-6 md:p-8 animate-fade-in-up">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="title">Event Title *</Label>

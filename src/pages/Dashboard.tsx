@@ -87,29 +87,29 @@ const Dashboard = () => {
     <div className="min-h-screen">
       <Navbar />
 
-      <main className="pt-24 pb-12">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12 space-y-4 animate-fade-in">
-            <h1 className="text-5xl font-bold tracking-wide">
+      <main className="pt-20 sm:pt-24 pb-8 sm:pb-12">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4 animate-fade-in">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wide">
               Your
               <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
                 {" "}Dashboard
               </span>
             </h1>
-            <p className="text-xl text-muted-foreground">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground px-4">
               Manage your events and experiences
             </p>
           </div>
 
           <Tabs defaultValue="attending" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-12">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 sm:mb-12">
               <TabsTrigger value="attending">Attending</TabsTrigger>
               <TabsTrigger value="hosting">Hosting</TabsTrigger>
             </TabsList>
 
-            <TabsContent value="attending" className="space-y-8">
+            <TabsContent value="attending" className="space-y-6 sm:space-y-8">
               {myEvents.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                   {myEvents.map((event, index) => (
                     <div
                       key={event.id}
@@ -128,20 +128,20 @@ const Dashboard = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 space-y-4 animate-fade-in">
-                  <p className="text-2xl text-muted-foreground">
+                <div className="text-center py-12 sm:py-20 space-y-3 sm:space-y-4 animate-fade-in px-4">
+                  <p className="text-xl sm:text-2xl text-muted-foreground">
                     You haven't joined any events yet
                   </p>
-                  <Button onClick={() => navigate("/explore")}>
+                  <Button onClick={() => navigate("/explore")} className="w-full sm:w-auto">
                     Explore Events
                   </Button>
                 </div>
               )}
             </TabsContent>
 
-            <TabsContent value="hosting" className="space-y-8">
+            <TabsContent value="hosting" className="space-y-6 sm:space-y-8">
               {createdEvents.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                   {createdEvents.map((event, index) => (
                     <div
                       key={event.id}
@@ -161,13 +161,13 @@ const Dashboard = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-20 space-y-4 animate-fade-in">
-                  <p className="text-2xl text-muted-foreground">
+                <div className="text-center py-12 sm:py-20 space-y-3 sm:space-y-4 animate-fade-in px-4">
+                  <p className="text-xl sm:text-2xl text-muted-foreground">
                     You haven't created any events yet
                   </p>
                   <Button
                     onClick={() => navigate("/host")}
-                    className="gap-2"
+                    className="gap-2 w-full sm:w-auto"
                   >
                     <PlusCircle className="w-5 h-5" />
                     Host Your First Event
