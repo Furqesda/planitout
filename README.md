@@ -1,73 +1,105 @@
-# Welcome to your Lovable project
+#PlanItout  
+
+Discover & Host Local Events – Cinematic, Modern, Full-Stack Web App
 
 ## Project info
 
 **URL**: https://lovable.dev/projects/dafa7ced-38ce-4733-8856-a1c4db2f48ef
 
-## How can I edit this code?
+## Project Overview
 
-There are several ways of editing your application.
+PlanItout is a cinematic, modern web application that helps people discover local events, create their own experiences, and connect with others who share their vibe. The app features a premium interface with smooth animations, glassmorphism, and a cohesive, launch-ready aesthetic.
 
+It was built as part of a full-stack mini project challenge for a tech internship application.
 **Use Lovable**
 
 Simply visit the [Lovable Project](https://lovable.dev/projects/dafa7ced-38ce-4733-8856-a1c4db2f48ef) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
-**Use your preferred IDE**
+### Key Features
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Explore Events: Browse local events with thumbnails, details, distance, and participants info.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Event Details Modal: View full event info, including location, date, host, and attendees.
 
-Follow these steps:
+Attend Event Flow: Mark events as attending, tracked via localStorage.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Host Event Dashboard: Create, edit, and delete your own events stored in Supabase.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Mock Authentication: Log in with any credentials (localStorage-based).
 
-# Step 3: Install the necessary dependencies.
-npm i
+Onboarding Cards: Playful tips for first-time users on Explore and Host pages.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Smooth UI/UX: Parallax hero scroll, fade-in animations, gentle motion effects, mobile-responsive.
+
+Search & Filter: Search events by title, city/location, and date range.
+
+Distance Calculation: Computes distance from user location (or random 1–9 km fallback).
+
+**Tech Stack**
+
+Frontend: React, TypeScript, Tailwind CSS, shadcn-ui, Vite
+
+Backend / Database: Supabase (events CRUD)
+
+Mapping: Leaflet (for Local Magic map explorer)
+
+State Management: React hooks + localStorage
+
+Deployment: Lovable
+
+**Setup Instructions**
+
+Clone the repository:
+
+git clone https://github.com/Furqesda/planitout.git
+cd planitout
+Install dependencies:
+npm install
+Start the development server:
 npm run dev
-```
+Open your browser at http://localhost:5173 (or as prompted).
+Environment Variables
 
-**Edit a file directly in GitHub**
+Create a .env file or use .env.example for local development:
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**API / Database Notes**
 
-**Use GitHub Codespaces**
+Supabase table events structure:
+{
+  "id": "uuid",
+  "title": "string",
+  "description": "string",
+  "location": "string",
+  "date": "string",
+  "maxParticipants": "number",
+  "currentParticipants": "number",
+  "imageUrl": "string",
+  "hostEmail": "string"
+}
+Events can be created, edited, and deleted by the logged-in user.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Explore Events fetches both preloaded sample events and Supabase events.
 
-## What technologies are used for this project?
+**Challenges & Solutions**
 
-This project is built with:
+Smooth parallax & scroll animations: Implemented with React + Tailwind transitions to avoid jank on mobile.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Event attendance tracking: Used localStorage for quick, client-side state management.
 
-## How can I deploy this project?
+Mock authentication: Allowed any credentials, ensuring seamless onboarding without real auth.
 
-Simply open [Lovable](https://lovable.dev/projects/dafa7ced-38ce-4733-8856-a1c4db2f48ef) and click on Share -> Publish.
+Mobile responsiveness: Added a hamburger menu, scaled typography, and ensured hero animations work across screen sizes.
 
-## Can I connect a custom domain to my Lovable project?
+**AI Tools Used**
 
-Yes, you can!
+ChatGPT: Guided architecture, prompts for UI/UX improvements, and code examples
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+GitHub Copilot: Assisted with component creation and repetitive code
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Cursor AI / Warp AI: Helped accelerate front-end development and layout tweaks
+
+**Deployed Link: http://planitout.lovable.app/**
