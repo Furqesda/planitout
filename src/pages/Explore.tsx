@@ -10,8 +10,9 @@ import { Button } from "@/components/ui/button";
 import { Search, Filter } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { sampleEvents, Event, getRandomDistance } from "@/lib/sampleEvents";
-import { isLoggedIn, addAttendedEvent, isEventAttended } from "@/lib/authHelpers";
+import { isLoggedIn, addAttendedEvent, isEventAttended, getUserEmail } from "@/lib/authHelpers";
 import { toast } from "sonner";
+import DeleteEventDialog from "@/components/DeleteEventDialog";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ const Explore = () => {
   const [locationFilter, setLocationFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const [eventToDelete, setEventToDelete] = useState<Event | null>(null);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const onboardingCards = [
     {
@@ -116,6 +119,35 @@ const Explore = () => {
     }, 300);
   };
 
+  const handleDeleteClick = (event: Event) => {
+    setEventToDelete(event);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!eventToDelete) return;
+
+    try {
+      // Only delete from Supabase if it's not a sample event
+      if (!sampleEvents.find((e) => e.id === eventToDelete.id)) {
+        const { error } = await supabase
+          .from("events")
+          .delete()
+          .eq("id", eventToDelete.id);
+
+        if (error) throw error;
+      }
+
+      toast.success("Event deleted successfully");
+      setIsDeleteDialogOpen(false);
+      setEventToDelete(null);
+      loadEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      toast.error("Failed to delete event");
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <Navbar />
@@ -179,19 +211,26 @@ const Explore = () => {
 
           {/* Events Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredEvents.map((event, index) => (
-              <div
-                key={event.id}
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <EventCard
-                  event={event}
-                  onViewDetails={() => handleViewDetails(event)}
-                  onAttend={() => handleAttend(event)}
-                  isAttended={isEventAttended(event.id)}
-                />
-              </div>
-            ))}
+            {filteredEvents.map((event, index) => {
+              const userEmail = getUserEmail();
+              const isOwnEvent = userEmail === event.host_email;
+              
+              return (
+                <div
+                  key={event.id}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <EventCard
+                    event={event}
+                    onViewDetails={() => handleViewDetails(event)}
+                    onAttend={() => handleAttend(event)}
+                    onDelete={() => handleDeleteClick(event)}
+                    isAttended={isEventAttended(event.id)}
+                    isOwnEvent={isOwnEvent}
+                  />
+                </div>
+              );
+            })}
           </div>
 
           {filteredEvents.length === 0 && (
@@ -210,6 +249,12 @@ const Explore = () => {
         onClose={() => setIsModalOpen(false)}
         onAttend={() => selectedEvent && handleAttend(selectedEvent)}
         isAttended={selectedEvent ? isEventAttended(selectedEvent.id) : false}
+      />
+
+      <DeleteEventDialog
+        open={isDeleteDialogOpen}
+        onOpenChange={setIsDeleteDialogOpen}
+        onConfirm={handleDeleteConfirm}
       />
 
       <Footer />
